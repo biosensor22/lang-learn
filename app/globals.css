@@ -1,26 +1,91 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
-  background: var(--background);
-  color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
 }
+
+.card {
+  position: absolute;
+  background: #091417;
+  overflow: hidden;
+  width: 100%;
+  min-height: 855px;
+}
+
+.glow {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  filter: blur(60px);
+  border-radius: 50%;
+
+  filter: blur(200px);
+  opacity: 0.7;
+}
+
+.g1 {
+  top: -50px;
+  left: -50px;
+  background: rgba(0, 150, 255, 0.3);
+}
+
+.g2 {
+  bottom: -80px;
+  right: -60px;
+  background: rgba(255, 0, 150, 0.3);
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #3b82f6, #9333ea);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #60a5fa, #a855f7);
+}
+
+.btn-header {
+  position: relative;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 10px;
+  transition: all 200ms ease-in-out;
+}
+
+.btn-header:hover {
+  transform: translateY(-5px);
+}
+
+/* .input-focus {
+  opacity: 0;
+  cursor: default;
+  width: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 200ms ease-in-out;
+  cursor: pointer;
+}
+
+.input-focus:focus {
+  width: 280px;
+  opacity: 100;
+  border: 1px solid gray;
+  cursor: text;
+}
+
+.input-edit {
+  border: solid 2px rgb(104, 100, 100);
+  margin-top: 8px;
+  border-radius: 16px;
+  padding: 8px 8px;
+} */
