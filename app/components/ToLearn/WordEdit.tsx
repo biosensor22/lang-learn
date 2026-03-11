@@ -1,8 +1,8 @@
 import type { Word } from "./types";
 import { useState } from "react";
-import Image from "next/image";
 import { saveEditCard } from "@/app/hooks/Words/saveEditCard";
 import { mutateClient } from "@/app/lib/utils/formatters";
+import { Check, X } from "lucide-react";
 
 export type Words = {
   id: number;
@@ -43,49 +43,61 @@ export function WordEdit({
   }
 
   return (
-    <div className="flex flex-col mt-4">
-      <span
-        onClick={onClose}
-        className="absolute text-white top-1 right-4 cursor-pointer hover:scale-115 duration-150"
-      >
-        ✕
-      </span>
-      <span className="absolute top-1 right-10 mt-px cursor-pointer hover:scale-115 duration-150">
-        <Image
-          onClick={() =>
-            saveData({ name, transcription, ruMean, examples, id })
-          }
-          width={20}
-          height={20}
-          src="check.svg"
-          alt="approve"
-        />
-      </span>
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[color:var(--text-soft)]">
+            Edit card
+          </p>
+          <p className="mt-1 text-lg font-semibold text-[color:var(--text-main)]">
+            Update word details
+          </p>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            onClick={onClose}
+            className="action-pill justify-center px-4 py-2"
+          >
+            <X size={16} />
+            Cancel
+          </button>
+          <button
+            type="button"
+            onClick={() => saveData({ name, transcription, ruMean, examples, id })}
+            className="action-pill justify-center border-transparent bg-[color:var(--accent)] px-4 py-2 text-[color:var(--text-inverse)] hover:bg-[color:var(--accent-strong)]"
+          >
+            <Check size={16} />
+            Save
+          </button>
+        </div>
+      </div>
+
       <input
-        className="input-edit text-red-500 "
+        className="input-edit"
         type="text"
-        placeholder="name"
+        placeholder="Word"
         onChange={(e) => setName(e.target.value)}
         value={name ?? ""}
       />
       <input
-        className="input-edit text-green-400 "
+        className="input-edit"
         type="text"
-        placeholder="transcription"
+        placeholder="Transcription"
         onChange={(e) => setTranscription(e.target.value)}
         value={transcription ?? ""}
       />
       <input
-        className="input-edit text-white "
+        className="input-edit"
         type="text"
-        placeholder="translations"
+        placeholder="Translation"
         onChange={(e) => setRuMean(e.target.value)}
         value={ruMean ?? ""}
       />
-      <input
-        className="input-edit text-yellow-400 "
-        type="text"
-        placeholder="examples"
+      <textarea
+        className="input-edit min-h-28"
+        placeholder="Examples"
         onChange={(e) => setExamples(e.target.value)}
         value={examples ?? ""}
       />

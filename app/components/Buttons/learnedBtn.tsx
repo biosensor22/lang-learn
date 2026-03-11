@@ -2,17 +2,20 @@ import Image from "next/image";
 
 export function LearnedBtn({ onLearned }: { onLearned: () => void }) {
   return (
-    <button className="cursor-pointer group relative">
+    <button
+      type="button"
+      onClick={onLearned}
+      className="icon-action"
+      aria-label="Move word to learned"
+      title="Learned"
+    >
       <Image
-        onClick={onLearned}
         width={17}
         height={17}
         src="/checkmark.svg"
-        alt="delete"
+        alt="learned"
       />
-      <div className="text-white opacity-0 group-hover:opacity-100 absolute right-0 -top-6 duration-400">
-        Learned
-      </div>
+      <span className="icon-tooltip">Learned</span>
     </button>
   );
 }

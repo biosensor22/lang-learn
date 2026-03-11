@@ -2,17 +2,20 @@ import Image from "next/image";
 
 export function EditBtn({ onEdit }: { onEdit: () => void }) {
   return (
-    <button className="cursor-pointer group relative">
+    <button
+      type="button"
+      onClick={onEdit}
+      className="icon-action"
+      aria-label="Edit word"
+      title="Edit"
+    >
       <Image
-        onClick={onEdit}
         width={17}
         height={17}
         src="/edit.svg"
-        alt="delete"
+        alt="edit"
       />
-      <div className="text-white opacity-0 group-hover:opacity-100 absolute -top-6 duration-400">
-        Edit
-      </div>
+      <span className="icon-tooltip">Edit</span>
     </button>
   );
 }

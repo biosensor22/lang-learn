@@ -1,30 +1,36 @@
 "use client";
 
+import { MoonStar, SunMedium } from "lucide-react";
 import { useTheme } from "next-themes";
-import { Moon, Sun } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export function ThemeSwitcher() {
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setMounted(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
+
+  const isDark = mounted && resolvedTheme === "dark";
 
   return (
-    <div className="flex text-sm">
-      <Moon className="h-[1.2rem] w-[1.2rem] " />
-
-      <button
-        onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-        className="w-10 h-5 bg-amber-50 rounded-2xl mx-2 p-0.5 flex cursor-pointer"
-      >
-        <div
-          className={`
-      w-4 h-4 rounded-2xl
-      bg-amber-400 dark:bg-amber-950
-      transition-transform
-      ${theme === "dark" ? "translate-x-0" : "translate-x-5"}
-    `}
-        />
-      </button>
-
-      <Sun className="h-[1.2rem] w-[1.2rem]" />
-    </div>
+    <button
+      type="button"
+      onClick={() => setTheme(isDark ? "light" : "dark")}
+      className="theme-toggle"
+      aria-label={`Switch to ${isDark ? "light" : "dark"} theme`}
+    >
+      <span className={`theme-toggle__thumb ${isDark ? "is-dark" : ""}`} />
+      <span className="theme-toggle__content">
+        <SunMedium size={16} />
+        <span className="hidden sm:inline">Light</span>
+      </span>
+      <span className="theme-toggle__content">
+        <MoonStar size={16} />
+        <span className="hidden sm:inline">Dark</span>
+      </span>
+    </button>
   );
 }

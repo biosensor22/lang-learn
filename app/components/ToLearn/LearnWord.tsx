@@ -19,44 +19,62 @@ export function LearnWord({ isBlurred }: Props) {
   const [forEdit, setForEdit] = useState<number>(0);
   const { words, isLoading } = useWords("to-learn");
 
-  if (isLoading && !words)
-    return <div className="text-white opacity-50">Loading...</div>;
+  if (isLoading && !words.length) {
+    return <div className="list-empty">Loading your cards...</div>;
+  }
+
+  if (!isLoading && words.length === 0) {
+    return (
+      <div className="list-empty">
+        Your learning deck is empty. Add a new word from the header to start
+        building it.
+      </div>
+    );
+  }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-3 sm:gap-4">
       {words.map((w: Word) => (
-        <div key={w.id} className="bg-black/40 rounded-2xl px-4 py-2 relative">
-          {forEdit !== w.id && (
-            <div>
-              <div className="absolute right-4 flex gap-1.5">
-                <EditBtn onEdit={() => setForEdit(w.id)} />
-                <DeleteBtn onDelete={() => DeleteWord(w.name)} />
-                <LearnedBtn onLearned={() => LearnedWord(w.name)} />
-              </div>
-              <div className="flex gap-2">
-                {w.audio && <PlaySound onAudio={() => playAudio(w.audio)} />}
+        <div key={w.id} className="word-card">
+          {forEdit !== w.id ? (
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-center gap-3">
+                    {w.audio && <PlaySound onAudio={() => playAudio(w.audio)} />}
+                    <p className="word-name">{w.name}</p>
+                    {w.transcription && (
+                      <p className="word-transcription">{w.transcription}</p>
+                    )}
+                  </div>
 
-                <p className="text-red-500 text-lg">{w.name}</p>
-                <p className="text-green-400 mt-1 ml-2 text-sm">
-                  {w.transcription}
-                </p>
-              </div>
-              <p
-                className={`text-white transition-all
-               ${isBlurred ? "blur-xs" : ""}`}
-              >
-                {w.ruMean}
-              </p>
-              <div className="grid grid-cols-1 gap-1 text-amber-300 mt-2">
-                {w.examples && <Examples examples={w.examples} />}
-              </div>
-            </div>
-          )}
+                  <p
+                    className={`word-translation mt-4 ${
+                      isBlurred ? "blur-sm select-none" : ""
+                    }`}
+                  >
+                    {w.ruMean}
+                  </p>
+                </div>
 
-          {forEdit === w.id && (
-            <div className="h-full w-full rounded-2xl">
-              <WordEdit word={w} onClose={() => setForEdit(0)} />
+                <div className="word-actions sm:justify-end">
+                  <EditBtn onEdit={() => setForEdit(w.id)} />
+                  <DeleteBtn onDelete={() => DeleteWord(w.name)} />
+                  <LearnedBtn onLearned={() => LearnedWord(w.name)} />
+                </div>
+              </div>
+
+              {w.examples && (
+                <div className="word-examples">
+                  <p className="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-[color:var(--text-soft)]">
+                    Examples
+                  </p>
+                  <Examples examples={w.examples} />
+                </div>
+              )}
             </div>
+          ) : (
+            <WordEdit word={w} onClose={() => setForEdit(0)} />
           )}
         </div>
       ))}

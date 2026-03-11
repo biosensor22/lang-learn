@@ -4,6 +4,7 @@ import { AddNewWord } from "@/app/hooks/Words/addWord";
 import { useEffect, useState, useCallback } from "react";
 import { useClickOutside } from "@/app/hooks/User/useClickOutside";
 import { mutateClient } from "@/app/lib/utils/formatters";
+import { Plus, X } from "lucide-react";
 
 type Props = {
   onClose: () => void;
@@ -20,7 +21,7 @@ export function AddWordComp({ onClose }: Props) {
     setTimeout(() => {
       onClose();
       setErr("");
-    }, 100);
+    }, 120);
   }, [onClose]);
 
   const modalRef = useClickOutside(closeWindow);
@@ -33,8 +34,8 @@ export function AddWordComp({ onClose }: Props) {
     return () => cancelAnimationFrame(id);
   }, []);
 
-  async function handleAddWord(value: string) {
-    const result = await AddNewWord(value);
+  async function handleAddWord(word: string) {
+    const result = await AddNewWord(word);
 
     if (!result.success) {
       setErr(result.message);
@@ -46,40 +47,69 @@ export function AddWordComp({ onClose }: Props) {
   }
 
   return (
-    <div className="w-full">
+    <div className="fixed inset-0 z-50 flex items-start justify-center bg-slate-950/25 px-4 pb-6 pt-24 backdrop-blur-sm">
       <div
         ref={modalRef}
-        className={`w-90 bg-indigo-950/70 boxshadow h-34 absolute top-0 justify-center
-           items-center flex flex-col rounded-2xl p-2 duration-100 ease-in-out
-          ${
-            mounted
-              ? "opacity-100 top-24 absolute pointer-events-auto"
-              : "opacity-0 top-0 absolute pointer-events-none"
-          }`}
+        className={`modal-panel transition duration-200 ease-out ${
+          mounted
+            ? "translate-y-0 scale-100 opacity-100"
+            : "translate-y-3 scale-[0.98] opacity-0 pointer-events-none"
+        }`}
       >
-        <p className="text-red-500 py-1">{err}</p>
+        <div className="mb-5 flex items-start justify-between gap-4">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[color:var(--text-soft)]">
+              Dictionary
+            </p>
+            <h2 className="mt-1 text-xl font-semibold tracking-tight text-[color:var(--text-main)]">
+              Add a new word
+            </h2>
+            <p className="mt-2 text-sm leading-6 text-[color:var(--text-soft)]">
+              The app will fetch pronunciation, examples and translation
+              automatically.
+            </p>
+          </div>
+
+          <button
+            type="button"
+            onClick={closeWindow}
+            className="mobile-menu-btn shrink-0"
+            aria-label="Close add word modal"
+          >
+            <X size={18} />
+          </button>
+        </div>
+
+        {err && (
+          <div className="mb-4 rounded-3xl border border-[color:var(--border-soft)] bg-[color:var(--danger-soft)] px-4 py-3 text-sm text-[color:var(--text-main)]">
+            {err}
+          </div>
+        )}
+
         <input
-          placeholder="Enter word"
-          className="bg-black flex h-10 w-80 rounded-xl boxshadow text-white px-2 outline-0"
+          placeholder="Enter an English word"
+          className="input-edit bg-transparent"
           maxLength={38}
           value={value}
           onChange={(e) => setValue(e.target.value)}
           type="text"
         />
-        <div className="gap-x-4 flex">
+
+        <div className="mt-5 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
           <button
-            onClick={() => handleAddWord(value)}
-            className="bg-amber-700 text-white px-10 py-2 rounded-2xl mt-4
-              cursor-pointer hover:scale-105 duration-100"
-          >
-            Add
-          </button>
-          <button
-            onClick={() => closeWindow()}
-            className="bg-green-900 text-white px-10 py-2 rounded-2xl mt-4
-              cursor-pointer hover:scale-105 duration-100"
+            type="button"
+            onClick={closeWindow}
+            className="action-pill justify-center"
           >
             Cancel
+          </button>
+          <button
+            type="button"
+            onClick={() => handleAddWord(value)}
+            className="action-pill justify-center border-transparent bg-[color:var(--accent)] text-[color:var(--text-inverse)] hover:bg-[color:var(--accent-strong)]"
+          >
+            <Plus size={16} />
+            Add word
           </button>
         </div>
       </div>

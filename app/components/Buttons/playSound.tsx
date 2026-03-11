@@ -2,13 +2,15 @@ import Image from "next/image";
 
 export function PlaySound({ onAudio }: { onAudio: () => void }) {
   return (
-    <Image
+    <button
+      type="button"
       onClick={onAudio}
-      width={18}
-      height={18}
-      className="cursor-pointer z-1"
-      src="sound.svg"
-      alt="sound"
-    />
+      className="icon-action shrink-0"
+      aria-label="Play pronunciation"
+      title="Play pronunciation"
+    >
+      <Image width={18} height={18} src="/sound.svg" alt="sound" />
+      <span className="icon-tooltip">Sound</span>
+    </button>
   );
 }
