@@ -7,10 +7,27 @@ body {
 
 .card {
   position: absolute;
-  background: #091417;
+  background: radial-gradient(
+    circle,
+    rgba(238, 174, 202, 1) 0%,
+    rgba(148, 187, 233, 1) 100%
+  );
   overflow: hidden;
   width: 100%;
   min-height: 855px;
+}
+
+html.dark .card {
+  background: radial-gradient(
+    circle,
+    rgba(40, 56, 138, 1) 0%,
+    rgb(58, 2, 13) 100%
+  );
+  color: #fff;
+}
+
+html.dark .header {
+  color: #fff;
 }
 
 .glow {
@@ -65,7 +82,7 @@ body {
   transform: translateY(-5px);
 }
 
-/* .input-focus {
+.input-focus {
   opacity: 0;
   cursor: default;
   width: 45px;
@@ -88,4 +105,4 @@ body {
   margin-top: 8px;
   border-radius: 16px;
   padding: 8px 8px;
-} */
+}

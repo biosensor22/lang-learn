@@ -52,7 +52,7 @@ export default function Home() {
   }
 
   return (
-    <div className="card w-full h-full flex flex-col px-10">
+    <div className="card w-full h-full flex flex-col">
       <div className="glow g1"></div>
       <div className="glow g2"></div>
 

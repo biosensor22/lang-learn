@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import RootLayoutClient from "./RootLayoutClient";
+import { ThemeProvider } from "next-themes";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -18,9 +19,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={poppins.className}>
-      <body>
-        <RootLayoutClient>{children}</RootLayoutClient>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${poppins.className}  overflow-y-hidden`}>
+        <ThemeProvider attribute="class">
+          <RootLayoutClient>{children}</RootLayoutClient>
+        </ThemeProvider>
       </body>
     </html>
   );

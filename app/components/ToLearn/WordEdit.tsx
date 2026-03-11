@@ -6,6 +6,7 @@ import { ListTypes } from "@/app/hooks/Words/wordsList";
 import { saveEditCard } from "@/app/hooks/Words/saveEditCard";
 
 export type Words = {
+  id: number;
   name: string | undefined;
   transcription: string | undefined;
   ruMean: string | undefined;
@@ -23,10 +24,17 @@ export function WordEdit({
   const [transcription, setTranscription] = useState(word.transcription);
   const [ruMean, setRuMean] = useState(word.ruMean);
   const [examples, setExamples] = useState(word.examples);
+  const [id, setId] = useState(word.id);
 
-  async function saveData({ name, transcription, ruMean, examples }: Words) {
-    if (!name || !transcription || !ruMean || !examples) return false;
-    const data = { name, transcription, ruMean, examples };
+  async function saveData({
+    name,
+    transcription,
+    ruMean,
+    examples,
+    id,
+  }: Words) {
+    if (!name || !ruMean || !id) return false;
+    const data = { name, transcription, ruMean, examples, id };
 
     const result = await saveEditCard(data);
     if (result.success) {
@@ -45,11 +53,16 @@ export function WordEdit({
       >
         ✕
       </span>
-      <span
-        onClick={() => saveData({ name, transcription, ruMean, examples })}
-        className="absolute top-1 right-10 mt-px cursor-pointer hover:scale-115 duration-150"
-      >
-        <Image width={20} height={20} src="check.svg" alt="approve" />
+      <span className="absolute top-1 right-10 mt-px cursor-pointer hover:scale-115 duration-150">
+        <Image
+          onClick={() =>
+            saveData({ name, transcription, ruMean, examples, id })
+          }
+          width={20}
+          height={20}
+          src="check.svg"
+          alt="approve"
+        />
       </span>
       <input
         className="input-edit text-red-500 "

@@ -30,7 +30,7 @@ export function Search({ search, setSearch }: SearchProps) {
         onBlur={() => setIsFocused(false)}
         className={`outline-none border border-white/20 rounded-2xl h-full px-4
 				 textn-md font-medium pr-10 focus:border-blue-600 duration-200 ease-in-out
-         ${isFocused ? "opacity-100 w-70" : "opacity-0 w-0"}
+         ${isFocused ? "opacity-100 w-50" : "opacity-0 w-0"}
          `}
         onChange={(e) => setSearch(e.target.value)}
         type="text"

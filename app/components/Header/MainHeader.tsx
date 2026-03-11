@@ -1,10 +1,10 @@
-import { signOut } from "next-auth/react";
 import { BUTTONS } from "@/app/constants/headerBtn";
-import { useState } from "react";
 import { AddWordComp } from "./AddWordComp";
 import { useRouter } from "next/navigation";
 import { Search } from "./Search";
-
+import { SignOutBtn } from "../Buttons/signOutBtn";
+import { ThemeSwitcher } from "../Buttons/ThemeSwitcher";
+import { useState } from "react";
 interface MainHeaderProps {
   onSwitch?: () => void;
   setSearch: (value: string) => void;
@@ -33,10 +33,10 @@ export function MainHeader({ onSwitch, setSearch, search }: MainHeaderProps) {
   }
 
   return (
-    <div className="w-full z-10">
-      <div className="h-16 flex mt-4">
+    <div className="z-10 px-6 sm:px-10">
+      <div className="h-10 sm:h-16 flex mt-4">
         <div className="flex w-full justify-between items-center text-center gap-10 text-lg text-white">
-          <div className="flex text-center gap-10">
+          <div className="md:flex text-center hidden md:gap-2 lg:gap-6 xl:gap-10 w-full text-black header">
             {BUTTONS.map((btn) => (
               <button
                 key={btn.name}
@@ -48,19 +48,13 @@ export function MainHeader({ onSwitch, setSearch, search }: MainHeaderProps) {
             ))}
             <Search search={search} setSearch={setSearch} />
           </div>
-
           <div className="flex">
-            <button
-              onClick={() => signOut()}
-              className="text-white flex px-8 py-2 rounded-2xl shadow-lg shadow-black/20
-              cursor-pointer hover:bg-blue-700 bg-blue-600 duration-150"
-            >
-              Log out
-            </button>
+            <ThemeSwitcher />
           </div>
+          <SignOutBtn />
         </div>
       </div>
-      <div className="w-full h-0.5 rounded-full bg-white/10"></div>
+      <div className="w-full h-0.5 mt-4 sm:mt-0 rounded-full bg-white/10"></div>
       {isAddWordOpen && <AddWordComp onClose={() => setAddWordOpen(false)} />}
     </div>
   );

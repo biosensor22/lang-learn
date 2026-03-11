@@ -50,16 +50,16 @@ export async function PATCH(req: NextRequest) {
       );
     }
 
-    await prisma.word.updateMany({
+    await prisma.word.update({
       where: {
+        id: data.id,
         userId: user.id,
-        name: name,
       },
       data: {
-        name: name,
+        name: name.trim(),
         transcription: transcription,
-        examples: examples,
-        ruMean: ruMean,
+        ruMean: ruMean.trim(),
+        examples: data.examples,
       },
     });
 
