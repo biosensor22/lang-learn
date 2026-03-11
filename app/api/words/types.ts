@@ -1,6 +1,5 @@
 export interface LinguaResponse {
   entries: Array<{
-    lexemes?: any[];
     pronunciations?: Array<{
       audio?: { url: string };
       context?: { regions: string[] };

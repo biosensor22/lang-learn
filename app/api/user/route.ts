@@ -15,7 +15,7 @@ export async function GET() {
     if (!email) {
       return NextResponse.json(
         { error: "User email missing" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -52,13 +52,16 @@ export async function POST(req: NextRequest) {
     if (existingUser) {
       return NextResponse.json(
         { success: false, message: "Email alredy in use" },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
     const user = await prisma.user.create({ data });
     return NextResponse.json({ success: true, user });
   } catch (err) {
-    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Invalid JSON", message: err },
+      { status: 400 },
+    );
   }
 }

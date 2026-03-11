@@ -7,13 +7,17 @@ export async function AddNewWord(word: string) {
   try {
     const response = await axios.post("/api/words", { word });
     return response.data;
-  } catch (err: any) {
-    const serverData = err.response?.data;
+  } catch (err: unknown) {
+    if (axios.isAxiosError(err)) {
+      const serverData = err.response?.data as { error?: string };
 
-    if (serverData.error) {
-      return { success: false, message: serverData.error };
+      if (serverData?.error) {
+        return { success: false, message: serverData.error };
+      }
+
+      return { success: false, message: err.message };
     }
 
-    return { success: false, message: err.message };
+    return { success: false, message: "Unknown error" };
   }
 }

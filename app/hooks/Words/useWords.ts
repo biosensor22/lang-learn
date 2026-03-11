@@ -10,7 +10,7 @@ export function useWords(type: ListTypes) {
       refreshInterval: 30000,
       revalidateOnFocus: true,
       dedupingInterval: 2000,
-    }
+    },
   );
 
   const words = data?.wordsLearn || [];

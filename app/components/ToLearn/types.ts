@@ -4,5 +4,5 @@ export type Word = {
   transcription?: string;
   ruMean?: string;
   examples?: string;
-  audio?: string;
+  audio: string;
 };

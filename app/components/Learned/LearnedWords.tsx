@@ -7,13 +7,14 @@ import {
   playAudio,
   toggleSetItem,
   ToLearnWord,
-} from "@/app/utils/formatters";
+} from "@/app/lib/utils/formatters";
 import { DeleteBtn } from "../Buttons/deleteBtn";
 import { EditBtn } from "../Buttons/editBtn";
 import { PlaySound } from "../Buttons/playSound";
 import { WordEdit } from "../ToLearn/WordEdit";
 import { Examples } from "../Text/Examples";
 import { ToLearnBtn } from "../Buttons/toLearnBtn";
+import type { Word } from "../ToLearn/types";
 
 export function LearnedWords() {
   const [forEdit, setForEdit] = useState<number>(0);
@@ -29,7 +30,7 @@ export function LearnedWords() {
 
   return (
     <div className="flex flex-col gap-4">
-      {words.map((w: any) => {
+      {words.map((w: Word) => {
         const isExpanded = expandedIds.has(w.id);
 
         return (

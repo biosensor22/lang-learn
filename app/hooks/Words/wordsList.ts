@@ -10,6 +10,7 @@ export async function getListOfWords(type: ListTypes) {
     return {
       success: false,
       message: "Error occured while getting words",
+      err,
     };
   }
 }

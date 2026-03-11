@@ -1,7 +1,9 @@
+"use client";
+
 import { AddNewWord } from "@/app/hooks/Words/addWord";
-import { ListTypes } from "@/app/hooks/Words/wordsList";
-import { useEffect, useRef, useState } from "react";
-import { mutate } from "swr";
+import { useEffect, useState, useCallback } from "react";
+import { useClickOutside } from "@/app/hooks/User/useClickOutside";
+import { mutateClient } from "@/app/lib/utils/formatters";
 
 type Props = {
   onClose: () => void;
@@ -11,35 +13,25 @@ export function AddWordComp({ onClose }: Props) {
   const [mounted, setMounted] = useState(false);
   const [value, setValue] = useState("");
   const [err, setErr] = useState("");
-  const modalRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  function closeWindow() {
+  const closeWindow = useCallback(() => {
     setMounted(false);
+
     setTimeout(() => {
       onClose();
       setErr("");
     }, 100);
-  }
+  }, [onClose]);
+
+  const modalRef = useClickOutside(closeWindow);
 
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        modalRef.current &&
-        !modalRef.current.contains(event.target as Node)
-      ) {
-        closeWindow();
-      }
-    }
+    const id = requestAnimationFrame(() => {
+      setMounted(true);
+    });
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [onClose]);
+    return () => cancelAnimationFrame(id);
+  }, []);
 
   async function handleAddWord(value: string) {
     const result = await AddNewWord(value);
@@ -47,9 +39,7 @@ export function AddWordComp({ onClose }: Props) {
     if (!result.success) {
       setErr(result.message);
     } else {
-      ["to-learn", "learned", "vocabulary"].forEach((type) =>
-        mutate(["words-list", type as ListTypes])
-      );
+      mutateClient();
       setErr("");
       closeWindow();
     }

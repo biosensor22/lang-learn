@@ -2,7 +2,7 @@ import { moveWordToLearned } from "@/app/hooks/Words/checkLearned";
 import type { ListTypes } from "@/app/hooks/Words/wordsList";
 import { mutate } from "swr";
 import { deleteWord } from "@/app/hooks/Words/deleteWord";
-import { addToLearnWord } from "../hooks/Words/addToLearnWord";
+import { addToLearnWord } from "../../hooks/Words/addToLearnWord";
 
 export function playAudio(url: string) {
   if (!url) return;
@@ -36,7 +36,7 @@ export async function ToLearnWord(word: string) {
 
 export function mutateClient() {
   ["to-learn", "learned", "vocabulary"].forEach((type) =>
-    mutate(["words-list", type as ListTypes])
+    mutate(["words-list", type as ListTypes]),
   );
 }
 

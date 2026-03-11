@@ -1,34 +1,33 @@
-import { BUTTONS } from "@/app/constants/headerBtn";
+import { BUTTONS } from "@/app/lib/constants/headerBtn";
 import { AddWordComp } from "./AddWordComp";
 import { useRouter } from "next/navigation";
-import { Search } from "./Search";
 import { SignOutBtn } from "../Buttons/signOutBtn";
 import { ThemeSwitcher } from "../Buttons/ThemeSwitcher";
 import { useState } from "react";
 interface MainHeaderProps {
   onSwitch?: () => void;
-  setSearch: (value: string) => void;
-  search: string;
 }
 
-export function MainHeader({ onSwitch, setSearch, search }: MainHeaderProps) {
+export function MainHeader({ onSwitch }: MainHeaderProps) {
   const router = useRouter();
   const [isAddWordOpen, setAddWordOpen] = useState(false);
   function handleAction(action: string) {
-    if (action === "learn") {
-      router.push("/");
-    }
-    if (action === "vocabulary") {
-      router.push("/vocabulary");
-    }
-    if (action === "learned") {
-      router.push("/learned");
-    }
-    if (action === "add-word") {
-      setAddWordOpen(true);
-    }
-    if (action === "blur-word") {
-      onSwitch?.();
+    switch (action) {
+      case "learn":
+        router.push("/");
+        break;
+      case "vocabulary":
+        router.push("/vocabulary");
+        break;
+      case "learned":
+        router.push("/learned");
+        break;
+      case "add-word":
+        setAddWordOpen(true);
+        break;
+      case "blur-word":
+        onSwitch?.();
+        break;
     }
   }
 
@@ -46,7 +45,6 @@ export function MainHeader({ onSwitch, setSearch, search }: MainHeaderProps) {
                 {btn.name}
               </button>
             ))}
-            <Search search={search} setSearch={setSearch} />
           </div>
           <div className="flex">
             <ThemeSwitcher />

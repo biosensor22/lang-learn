@@ -1,9 +1,8 @@
 import type { Word } from "./types";
 import { useState } from "react";
 import Image from "next/image";
-import { mutate } from "swr";
-import { ListTypes } from "@/app/hooks/Words/wordsList";
 import { saveEditCard } from "@/app/hooks/Words/saveEditCard";
+import { mutateClient } from "@/app/lib/utils/formatters";
 
 export type Words = {
   id: number;
@@ -24,7 +23,7 @@ export function WordEdit({
   const [transcription, setTranscription] = useState(word.transcription);
   const [ruMean, setRuMean] = useState(word.ruMean);
   const [examples, setExamples] = useState(word.examples);
-  const [id, setId] = useState(word.id);
+  const id = word.id;
 
   async function saveData({
     name,
@@ -38,9 +37,7 @@ export function WordEdit({
 
     const result = await saveEditCard(data);
     if (result.success) {
-      ["to-learn", "learned", "vocabulary"].forEach((type) =>
-        mutate(["words-list", type as ListTypes])
-      );
+      mutateClient();
       onClose();
     }
   }
