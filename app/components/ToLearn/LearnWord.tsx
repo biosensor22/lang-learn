@@ -33,15 +33,17 @@ export function LearnWord({ isBlurred }: Props) {
   }
 
   return (
-    <div className="flex flex-col gap-3 sm:gap-4">
+    <div className="flex w-full flex-col gap-2.5 sm:gap-3">
       {words.map((w: Word) => (
         <div key={w.id} className="word-card">
           {forEdit !== w.id ? (
-            <div className="flex flex-col gap-4">
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+            <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                 <div className="min-w-0 flex-1">
-                  <div className="flex flex-wrap items-center gap-3">
-                    {w.audio && <PlaySound onAudio={() => playAudio(w.audio)} />}
+                  <div className="flex flex-wrap items-center gap-2.5">
+                    {w.audio && (
+                      <PlaySound onAudio={() => playAudio(w.audio)} />
+                    )}
                     <p className="word-name">{w.name}</p>
                     {w.transcription && (
                       <p className="word-transcription">{w.transcription}</p>
@@ -49,7 +51,7 @@ export function LearnWord({ isBlurred }: Props) {
                   </div>
 
                   <p
-                    className={`word-translation mt-4 ${
+                    className={`word-translation mt-1 ${
                       isBlurred ? "blur-sm select-none" : ""
                     }`}
                   >
@@ -66,9 +68,6 @@ export function LearnWord({ isBlurred }: Props) {
 
               {w.examples && (
                 <div className="word-examples">
-                  <p className="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-[color:var(--text-soft)]">
-                    Examples
-                  </p>
                   <Examples examples={w.examples} />
                 </div>
               )}

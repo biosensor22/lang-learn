@@ -10,7 +10,7 @@ export function Examples({ examples }: { examples?: string }) {
       {sentences.map((sentence, i) => (
         <span
           key={i}
-          className="block w-full rounded-2xl bg-[color:var(--warm-soft)] px-3 py-2 text-sm leading-6 sm:text-[0.95rem]"
+          className="block w-full rounded-[1rem] bg-[color:var(--warm-soft)] px-2.5 py-1.5 text-[13px] leading-5 sm:text-[0.9rem]"
         >
           {sentence}
         </span>

@@ -41,17 +41,17 @@ export function VocabWords() {
   };
 
   return (
-    <div className="flex flex-col gap-3 sm:gap-4">
+    <div className="flex w-full flex-col gap-2.5 sm:gap-3">
       {words.map((w: Word) => {
         const isExpanded = expandedIds.has(w.id);
 
         return (
           <div key={w.id} className="word-card">
             {forEdit !== w.id ? (
-              <div className="flex flex-col gap-4">
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+              <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                   <div className="min-w-0 flex-1">
-                    <div className="flex flex-wrap items-center gap-3">
+                    <div className="flex flex-wrap items-center gap-2.5">
                       {w.audio && (
                         <PlaySound onAudio={() => playAudio(w.audio)} />
                       )}
@@ -61,7 +61,7 @@ export function VocabWords() {
                       )}
                     </div>
 
-                    <p className="word-translation mt-4">{w.ruMean}</p>
+                    <p className="word-translation mt-3">{w.ruMean}</p>
                   </div>
 
                   <div className="word-actions sm:justify-end">
@@ -73,10 +73,10 @@ export function VocabWords() {
                 </div>
 
                 {w.examples && (
-                  <div className="flex flex-col gap-3">
+                  <div className="flex flex-col gap-2.5">
                     <button
                       type="button"
-                      className="w-fit rounded-full bg-[color:var(--accent-soft)] px-3 py-1.5 text-sm font-medium text-[color:var(--text-main)] transition hover:opacity-85"
+                      className="w-fit rounded-full bg-[color:var(--accent-soft)] px-2.5 py-1 text-xs font-medium text-[color:var(--text-main)] transition hover:opacity-85"
                       onClick={() => toggleExpand(w.id)}
                     >
                       {isExpanded ? "Hide examples" : "Show examples"}
@@ -84,7 +84,7 @@ export function VocabWords() {
 
                     {isExpanded && (
                       <div className="word-examples">
-                        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-[color:var(--text-soft)]">
+                        <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-[color:var(--text-soft)]">
                           Examples
                         </p>
                         <Examples examples={w.examples} />

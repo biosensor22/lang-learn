@@ -47,7 +47,7 @@ export function AddWordComp({ onClose }: Props) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center bg-slate-950/25 px-4 pb-6 pt-24 backdrop-blur-sm">
+    <div className="fixed z-50 flex items-start justify-center  px-4 pt-2 backdrop-blur-sm">
       <div
         ref={modalRef}
         className={`modal-panel transition duration-200 ease-out ${
