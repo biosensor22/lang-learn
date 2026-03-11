@@ -76,7 +76,7 @@ export function VocabWords() {
                   <div className="flex flex-col gap-2.5">
                     <button
                       type="button"
-                      className="w-fit rounded-full bg-[color:var(--accent-soft)] px-2.5 py-1 text-xs font-medium text-[color:var(--text-main)] transition hover:opacity-85"
+                      className="w-fit rounded-full bg-(--accent-soft) px-2.5 py-1 text-xs font-medium text-(--text-main) transition hover:opacity-85"
                       onClick={() => toggleExpand(w.id)}
                     >
                       {isExpanded ? "Hide examples" : "Show examples"}
@@ -84,7 +84,7 @@ export function VocabWords() {
 
                     {isExpanded && (
                       <div className="word-examples">
-                        <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-[color:var(--text-soft)]">
+                        <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-(--text-soft)">
                           Examples
                         </p>
                         <Examples examples={w.examples} />

@@ -29,7 +29,7 @@ export default function Home() {
       <main className="mx-auto flex h-full min-h-0 w-full max-w-6xl flex-1 p-2 px-4 sm:px-2">
         <section className="surface-panel page-panel flex min-h-0 w-full flex-1 flex-col overflow-hidden px-4 py-3 sm:px-6 sm:py-4">
           <div className="mb-2">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[color:var(--text-soft)]">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-(--text-soft)">
               Vocabulary
             </p>
           </div>

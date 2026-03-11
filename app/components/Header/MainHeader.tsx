@@ -8,6 +8,12 @@ import { ThemeSwitcher } from "../Buttons/ThemeSwitcher";
 import { Languages, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
+type AnchorPosition = {
+  top: number;
+  left: number;
+  width: number;
+};
+
 interface MainHeaderProps {
   onSwitch?: () => void;
 }
@@ -30,6 +36,7 @@ export function MainHeader({ onSwitch }: MainHeaderProps) {
   const router = useRouter();
   const [isAddWordOpen, setAddWordOpen] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [addWordAnchor, setAddWordAnchor] = useState<AnchorPosition | null>(null);
 
   const visibleButtons = BUTTONS.filter(
     (btn) => btn.action !== "blur-word" || Boolean(onSwitch),
@@ -47,7 +54,10 @@ export function MainHeader({ onSwitch }: MainHeaderProps) {
     };
   }, [isMobileMenuOpen]);
 
-  function handleAction(action: string) {
+  function handleAction(
+    action: string,
+    anchor?: AnchorPosition,
+  ) {
     setMobileMenuOpen(false);
 
     switch (action) {
@@ -61,6 +71,9 @@ export function MainHeader({ onSwitch }: MainHeaderProps) {
         router.push("/learned");
         break;
       case "add-word":
+        if (anchor) {
+          setAddWordAnchor(anchor);
+        }
         setAddWordOpen(true);
         break;
       case "blur-word":
@@ -77,7 +90,15 @@ export function MainHeader({ onSwitch }: MainHeaderProps) {
       <button
         key={`${action.name}-${mobile ? "mobile" : "desktop"}`}
         type="button"
-        onClick={() => handleAction(action.action)}
+        onClick={(event) => {
+          const rect = event.currentTarget.getBoundingClientRect();
+
+          handleAction(action.action, {
+            top: rect.bottom,
+            left: rect.left,
+            width: rect.width,
+          });
+        }}
         className={`header-nav-btn ${isActive ? "is-active" : ""} ${
           mobile ? "w-full justify-start text-left" : ""
         }`}
@@ -173,7 +194,15 @@ export function MainHeader({ onSwitch }: MainHeaderProps) {
         </div>
       )}
 
-      {isAddWordOpen && <AddWordComp onClose={() => setAddWordOpen(false)} />}
+      {isAddWordOpen && addWordAnchor && (
+        <AddWordComp
+          anchor={addWordAnchor}
+          onClose={() => {
+            setAddWordOpen(false);
+            setAddWordAnchor(null);
+          }}
+        />
+      )}
     </>
   );
 }
